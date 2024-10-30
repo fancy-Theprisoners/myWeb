@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+   
+<head>   
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Code -by ZhenYu.Sha</title>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            background: #000;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        @font-face {
+    font-family: 'MaoBiShuTi';
+    src: url('./font/LuoGuoChengMaoBiXiaoXianKaiJianTi-2.ttf') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.button {
+    position: absolute;
+    bottom: 1%;
+    left: 50%;
+}
+/* From Uiverse.io by sekaiking */ 
+button {
+  background-color: white;
+  color: black;
+  border-radius: 10em;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 1em 2em;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid black;
+  box-shadow: 0 0 0 0 black;
+}
+
+button:hover {
+  transform: translateY(-4px) translateX(-2px);
+  box-shadow: 2px 5px 0 0 black;
+};
+
+button:active {
+  transform: translateY(2px) translateX(1px);
+  box-shadow: 0 0 0 0 black;
+};
+    </style>
+</head>
+   
+<body>  
+<canvas id="cvs"></canvas>
+<div class="button">
+<button onclick="butClick()">
+    Click
+</button>
+</div>
+<script>
+    function butClick() {
+        window.location.href = 'index2.html';
+    }
+</script>
+<script type="text/javascript">
+    var cvs = document.getElementById("cvs");
+    var ctx = cvs.getContext("2d");
+    var cw = cvs.width = document.body.clientWidth;
+    var ch = cvs.height = document.body.clientHeight;
+    //动画绘制对象
+    var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+    var codeRainArr = []; //代码雨数组
+    var cols = parseInt(cw / 40); //代码雨列数
+    var step = 40;    //步长，每一列内部数字之间的上下间隔
+    ctx.font = "bold 32px MaoBiShuTi"; //声明字体，个人喜欢微软雅黑
+
+    // const letterSpacing = '10px';
+ 
+    function createColorCv() {
+        //画布基本颜色
+        ctx.fillStyle = "#242424";
+        ctx.fillRect(0, 0, cw, ch);
+    }
+ 
+    //创建代码雨
+    function createCodeRain() {
+        for (var n = 0; n < cols; n++) {
+            var col = [];
+            //基础位置，为了列与列之间产生错位
+            var basePos = parseInt(Math.random() * 300);
+            //随机速度 3~13之间
+            var speed = parseInt(Math.random() * 10) + 3;
+            //每组的x轴位置随机产生
+            var colx = parseInt(Math.random() * cw)
+ 
+            //绿色随机
+            var rgbr = 255;
+            var rgbg = 255;
+            var rgbb = 255;
+            //ctx.fillStyle = "rgb("+r+','+g+','+b+")"
+
+            var textList = [
+    '夫', '天', '地', '万', '物', '人', '与', '自', '然', '皆', '为', '一', '体', '不', '可', '分', '也', '自', '然', '者', '非', '独', '吾', '人', '所', '栖', '之', '地', '亦', '为', '心', '灵', '之', '镜', '映', '吾', '所', '思', '所', '恐', '所', '盼',
+    '目', '者', '心', '之', '窗', '也', '凝', '视', '自', '然', '乃', '见', '其', '壮', '丽', '与', '幽', '微', '风', '中', '竹', '叶', '轻', '盈', '而', '不', '失', '其', '劲', '大', '地', '波', '涛', '静', '默', '而', '深', '邃', '每', '观', '自', '然', '之', '目', '所', '见', '者', '非', '仅', '其', '形', '色', '乃', '人', '与', '其', '共', '生', '之', '脆', '弱', '与', '坚', '韧', '也',
+    '天', '地', '之', '间', '人', '生', '未', '尝', '为', '自', '然', '之', '主', '惟', '与', '其', '共', '舞', '耳', '共', '生', '之', '道', '乃', '求', '平', '衡', '常', '怀', '谦', '卑', '以', '悟', '自', '然', '之', '教', '自', '然', '者', '无', '言', '之', '师', '也', '示', '我', '以', '生', '命', '之', '轮', '回', '警', '我', '以', '息', '息', '相', '关', '之', '理', '吾', '人', '每', '一', '呼', '吸', '皆', '契', '于', '自', '然', '焉',
+    '归', '于', '自', '然', '乃', '返', '本', '归', '真', '之', '道', '也', '人', '与', '自', '然', '之', '和', '非', '独', '在', '外', '在', '景', '物', '亦', '在', '内', '心', '觉', '悟', '与', '共', '鸣', '以', '目', '观', '之', '以', '心', '通', '之', '乃', '可', '觉', '醒', '人', '与', '天', '地', '共', '和', '之', '美', '也'
+];
+ 
+            for (var i = 0; i < parseInt(ch / step) / 2; i++) {
+                var code = {
+                    x: colx,
+                    y: -(step * i) - basePos,
+                    speed: speed,
+                    //  text : parseInt(Math.random()*10)%2 == 0 ? 0 : 1  //随机生成0或者1
+                    text: textList[parseInt(Math.random() * 11)], //随机生成字母数组中的一个
+                    color: "rgb(" + rgbr + ',' + rgbg + ',' + rgbb + ")",
+                    letterSpacing: '10px'
+                }
+                col.push(code);
+            }
+            codeRainArr.push(col);
+        }
+    }
+ 
+    //代码雨下起来
+    function codeRaining() {
+        //把画布擦干净
+        ctx.clearRect(0, 0, cw, ch);
+        //创建有颜色的画布
+        //createColorCv();
+        for (var n = 0; n < codeRainArr.length; n++) {
+            //取出列
+            col = codeRainArr[n];
+            //遍历列，画出该列的代码
+            for (var i = 0; i < col.length; i++) {
+                var code = col[i];
+                if (code.y > ch) {
+                    //如果超出下边界则重置到顶部
+                    code.y = 0;
+                } else {
+                    //匀速降落
+                    code.y += code.speed;
+                }
+                
+                //1 颜色也随机变化
+                //ctx.fillStyle = "hsl("+(parseInt(Math.random()*359)+1)+",30%,"+(50-i*2)+"%)"; 
+ 
+                //2 绿色逐渐变浅
+                // ctx.fillStyle = "hsl(123,80%,"+(30-i*2)+"%)"; 
+ 
+                //3 绿色随机
+                // var r= 0;
+                // var g= parseInt(Math.random()*255) + 3;
+                // var b= 0;
+                // ctx.fillStyle = "rgb("+r+','+g+','+b+")";
+ 
+                //4 一致绿
+                ctx.fillStyle = code.color;
+ 
+ 
+                //把代码画出来
+                ctx.fillText(code.text, code.x, code.y);
+            }
+        }
+        requestAnimationFrame(codeRaining);
+    }
+ 
+    //创建代码雨
+    createCodeRain();
+    //开始下雨吧 GO>>
+    requestAnimationFrame(codeRaining);
+</script>
+   
+</body>
+</html>

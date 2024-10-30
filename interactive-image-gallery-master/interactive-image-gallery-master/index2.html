@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手电筒效果</title>
+    <style>
+		* {
+		    margin: 0;
+		    padding: 0;
+		    box-sizing: border-box;
+		}
+		
+		body {
+		    height: 100vh;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    background-color: black;
+		    overflow: hidden;
+		}
+		
+		.torch-container {
+		    position: relative;
+		    width: 100%;
+		    height: 100%;
+		    overflow: hidden;
+		}
+		
+		.background-image {
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		}
+		
+		.torch {
+		    position: absolute;
+		    width: 200px; 
+		    height: 200px;
+		    border-radius: 50%;
+		    background: rgba(0,0,0,0);
+		    box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.8);
+		    cursor: none;
+		}
+
+	</style>
+</head>
+<body>
+    <div class="torch-container">
+        <img src="images/1.jpg" alt="背景图片" class="background-image">
+        <div class="torch"></div>
+    </div>
+    <script>
+		document.addEventListener('mousemove', function(e) {
+		    const torch = document.querySelector('.torch');
+		    const torchSize = 200; // 圆形的宽度
+		    torch.style.left = `${e.pageX - torchSize / 2}px`;
+		    torch.style.top = `${e.pageY - torchSize / 2}px`;
+		});
+
+	</script>
+</body>
+</html>
